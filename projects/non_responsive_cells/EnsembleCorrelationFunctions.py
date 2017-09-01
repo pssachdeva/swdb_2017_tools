@@ -603,7 +603,7 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
 
     CE_sorted_by_participation = [CE_final[ii] for ii in ids_part]
 
-    if verbose:
+    #if verbose:
         #print 'CE_final Original top 3:'
         #print CE_final[:3]
         #print 'CE_sorted_by_participation top 3:'
@@ -614,7 +614,7 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
 
     CE_sorted_by_size = [CE_final[ii] for ii in ids_core_size]
     
-    if verbose:
+    #if verbose:
         #print 'Sorted by core size, top 3'
         #for i in range(3):
         #    print CE_sorted_by_size[i]
