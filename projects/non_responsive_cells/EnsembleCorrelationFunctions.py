@@ -543,6 +543,10 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
     
     Returns
     ----------
+        CE_sorted_by_participation: core ensembles ranked from highest to lowest by participation
+        
+        CE_sorted_by_size: core ensembles ranked from largest to smallest
+        
         clique_summary: number of ensembles in clique across cliques
         
         core_summary: Number of cells in core across all unique core Ensembles
@@ -573,10 +577,13 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
         plt.tight_layout()
 
 
-    # Calculate how often each core appears in the original set of ensembles
+    ## Calculate how often each core appears in the original set of ensembles in two steps:
+    # Step 1: sum rows of cells in core ensemble and check if it is equal to the number of 
+    # cells in core. 6 cells are in core ensembles, if all cells are active in a given high activity 
+    # frame, then the rows should add to 6
     core_in_ensemble = [np.where(np.sum(ensembles[CE_final[i],:],axis=0)==len(CE_final[i])) 
                         for i in range(len(CE_final))]
-
+    # Step 2: Count how many times the core repeats!
     repetition_count = [core_in_ensemble[i][0].shape[0] for i in range(len(core_in_ensemble))]
 
     percent_participation = 100*np.array(repetition_count).astype(float)/ensembles.shape[1]
@@ -587,5 +594,29 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
         plt.xlabel('Percent Participation %')
         plt.ylabel('Number of Core Ensembles')
         plt.title('Core Ensemble Participation in All Ensembles')
+        
+        
+        
+    ## Sort by participation percentage!
+    ids_part = percent_participation.argsort()[::-1][:]
+    percent_participation_ordered = percent_participation[ids_part]
+
+    CE_sorted_by_participation = [CE_final[ii] for ii in ids_part]
+
+    if verbose:
+        print 'CE_final Original top 3:'
+        print CE_final[:3]
+        print 'CE_sorted_by_participation top 3:'
+        print CE_sorted_by_participation[:3]
+        
+    # Sort by core size!
+    ids_core_size = np.array(core_summary).argsort()[::-1][:]
+
+    CE_sorted_by_size = [CE_final[ii] for ii in ids_core_size]
     
-    return clique_summary, core_summary, percent_participation
+    if verbose:
+        print 'Sorted by core size, top 3'
+        for i in range(3):
+            print CE_sorted_by_size[i]
+    
+    return CE_sorted_by_participation, CE_sorted_by_size, clique_summary, core_summary, percent_participation
