@@ -124,7 +124,7 @@ def correlations_between_ensembles(ensemble_array,surr_num,percentile,verbose=Fa
     if verbose:
         # Show zip
         print('Total number of permutations ',xv.shape)
-        print('zip permutations example of first 300: ', xvyv_zip[:300])
+        #print('zip permutations example of first 300: ', xvyv_zip[:300])
     
     # Calculate Pearson Correlation Coefficient
     R = [np.corrcoef(ensemble_array[:,i],ensemble_array[:,j])[0,1] for i,j in zip(xv,yv)]
@@ -168,10 +168,10 @@ def correlations_between_ensembles(ensemble_array,surr_num,percentile,verbose=Fa
     if verbose:
         print ''
         print('Pairs above threshold (z): ',above_thresh_ensembles_boot.shape)
-        print above_thresh_ensembles_boot.T
+        #print above_thresh_ensembles_boot.T
         print ''
         print('Fisher-z values above threshold: ',z_values_boot.shape)
-        print z_values_boot
+        #print z_values_boot
     
     # Flatten pairs that are above threshold
     tmp_flatten = above_thresh_ensembles_boot.flatten()
@@ -335,10 +335,10 @@ def correlations_between_ensemble_sets(ensemble_array1,ensemble_array2,surr_num,
     if verbose:
         print ''
         print('Pairs above threshold (z): ',above_thresh_ensembles_boot.shape)
-        print above_thresh_ensembles_boot.T
+        #print above_thresh_ensembles_boot.T
         print ''
         print('Fisher-z values above threshold: ',z_values_boot.shape)
-        print z_values_boot
+        #print z_values_boot
     
     # Flatten pairs that are above threshold
     tmp_flatten = above_thresh_ensembles_boot.flatten()
@@ -407,8 +407,8 @@ def get_correlation_cliques(ensembles,ensemble_pair_ind,verbose=False):
     '''
     
     if verbose:
-        print'First 50 Pairs: '
-        print pair_indices_zip[:50]
+        #print'First 50 Pairs: '
+        #print pair_indices_zip[:50]
         print('Full size of pairs:',ensemble_pair_ind.shape[0])
         print ''
 
@@ -430,9 +430,9 @@ def get_correlation_cliques(ensembles,ensemble_pair_ind,verbose=False):
         print('Elapsed time:',elapsed) 
         print('Number of cliques: ',len(cliques))
         print ''
-        print 'The first few cliques: (clique # in first column)'
-        for i in range(2):
-            print [i, cliques[i]]
+        #print 'The first few cliques: (clique # in first column)'
+        #for i in range(2):
+        #    print [i, cliques[i]]
             
         print ''
             
@@ -604,10 +604,10 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
     CE_sorted_by_participation = [CE_final[ii] for ii in ids_part]
 
     if verbose:
-        print 'CE_final Original top 3:'
-        print CE_final[:3]
-        print 'CE_sorted_by_participation top 3:'
-        print CE_sorted_by_participation[:3]
+        #print 'CE_final Original top 3:'
+        #print CE_final[:3]
+        #print 'CE_sorted_by_participation top 3:'
+        #print CE_sorted_by_participation[:3]
         
     # Sort by core size!
     ids_core_size = np.array(core_summary).argsort()[::-1][:]
@@ -615,8 +615,8 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
     CE_sorted_by_size = [CE_final[ii] for ii in ids_core_size]
     
     if verbose:
-        print 'Sorted by core size, top 3'
-        for i in range(3):
-            print CE_sorted_by_size[i]
+        #print 'Sorted by core size, top 3'
+        #for i in range(3):
+        #    print CE_sorted_by_size[i]
     
     return CE_sorted_by_participation, CE_sorted_by_size, clique_summary, core_summary, percent_participation
