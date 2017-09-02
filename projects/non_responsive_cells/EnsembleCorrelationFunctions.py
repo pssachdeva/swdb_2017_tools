@@ -466,6 +466,7 @@ def get_correlation_cliques(ensembles,ensemble_pair_ind,verbose=False):
         plt.xlabel('Ensemble # in clique')
         # Label xticks with corresponding pairs
         plt.xticks(range(len(sample_clique)), sample_clique)
+        plt.show()
 
         # Plot sum across ensembles
         ax1 = plt.subplot(gs[1])
@@ -476,6 +477,7 @@ def get_correlation_cliques(ensembles,ensemble_pair_ind,verbose=False):
         #plt.title('90 percentile')
         plt.suptitle('Example Clique: Defining Core Ensembles',fontsize=18)
         #plt.tight_layout()
+        plt.show()
             
             
         
@@ -575,6 +577,7 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
         plt.xlabel('Number of Cells in Unique Core')
 
         plt.tight_layout()
+        plt.show()
 
 
     ## Calculate how often each core appears in the original set of ensembles in two steps:
@@ -595,7 +598,7 @@ def summary_stats(ensembles,cliques,CE_final,verbose=False):
         plt.ylabel('Number of Core Ensembles')
         plt.title('Core Ensemble Participation in All Ensembles')
         
-        
+        plt.show()
         
     ## Sort by participation percentage!
     ids_part = percent_participation.argsort()[::-1][:]
