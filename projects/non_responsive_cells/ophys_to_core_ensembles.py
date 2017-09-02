@@ -36,29 +36,34 @@ def exp_to_ensembles(boc,ophys_experiment_id, stimulus, verbose=False):
     T = np.array([time[0],time[-1]])
 
 
-    time, ensembles = de.find_high_activity(spktms, T, dt=0.005, binsize=0.5, nsurr=1000, pval=0.05)
+    time_w_ensembles, ensembles, percent_ensembles, coactive_binned, coactive_surr_binned_tot = de.find_high_activity(
+        spktms, T, dt=0.005, binsize=0.5, nsurr=1000, pval=0.05)
 
     if verbose:
         print('high frequency frames determined – ' + str(t.time()-start_time) +' elapsed')
         print 'Number of high frequency frames: ' + str(len(ensembles[1]))
-
-        plt.imshow(ensembles)
+        print 'Percent Ensembles: ' + str(percent_ensembles)
 
     ensemble_matrix, above_thresh_ensembles_boot, z_values_boot = ecf.correlations_between_ensembles(
-        ensemble_array=ensembles,surr_num=100,percentile=95,verbose=verbose)
+        ensemble_array=ensembles,surr_num=200,percentile=95,verbose=verbose)
 
     if verbose:
         print('Ensemble matrix determined – ' + str(t.time()-start_time) +' elapsed')
 
     cliques = ecf.get_correlation_cliques(ensembles,above_thresh_ensembles_boot,verbose=verbose)
 
-    CE_final = ecf.get_unique_core_ensembles(ensembles,cliques,95)
+    # for i, clique in enumerate(cliques):
+    #     if len(clique) > 5:
+    #         clique.pop(i)
 
+    CE_final = ecf.get_unique_core_ensembles(ensembles,cliques,100)
 
+    CE_sorted_by_participation, CE_sorted_by_size, clique_summary, core_summary, percent_participation = ecf.summary_stats(
+        ensembles,cliques,CE_final,verbose=verbose)
 
     if verbose:
-        ecf.summary_stats(ensembles,cliques,CE_final,verbose=verbose)
+
         print('Core Ensembles determined – ' + str(t.time()-start_time) +' elapsed')
 
 
-    return cliques, CE_final, ensembles, cellID, metadata
+    return cliques, CE_final, CE_sorted_by_size, CE_sorted_by_participation, percent_participation, ensembles, cellID, metadata
