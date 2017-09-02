@@ -466,7 +466,6 @@ def get_correlation_cliques(ensembles,ensemble_pair_ind,verbose=False):
         plt.xlabel('Ensemble # in clique')
         # Label xticks with corresponding pairs
         plt.xticks(range(len(sample_clique)), sample_clique)
-        plt.show()
 
         # Plot sum across ensembles
         ax1 = plt.subplot(gs[1])
